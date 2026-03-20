@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>新年抽獎機</title>
+    <title>新年抽獎</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -20,21 +20,21 @@
         .container {
             background: white;
             border-radius: 30px;
-            padding: 30px;
-            max-width: 500px;
+            padding: 40px 30px;
+            max-width: 450px;
             width: 100%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         
         .header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 35px;
         }
         
         .header h1 {
-            font-size: 36px;
+            font-size: 42px;
             color: #667eea;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             font-weight: 800;
         }
         
@@ -43,90 +43,101 @@
             color: #999;
         }
         
-        .machine-display {
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 25px;
+        .input-group {
+            margin-bottom: 30px;
+        }
+        
+        .player-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
             text-align: center;
-            min-height: 280px;
+            transition: border-color 0.3s;
+        }
+        
+        .player-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .prize-display-box {
+            background: linear-gradient(135deg, #f5f7fa, #e9ecef);
+            border-radius: 20px;
+            padding: 40px 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 3px solid #667eea;
+            min-height: 200px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
         
-        .machine-window {
-            width: 100%;
-            height: 200px;
-            background: white;
-            border-radius: 15px;
-            border: 3px solid #667eea;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        
-        .prize-display {
+        .prize-emoji {
             font-size: 100px;
-            transition: none;
+            margin-bottom: 15px;
+            animation: fadeIn 0.5s ease-in;
         }
         
-        .prize-display.spinning {
-            animation: bounce-spin 2s ease-out;
-        }
-        
-        @keyframes bounce-spin {
-            0% { 
-                transform: scale(0.3) rotate(0deg);
-                opacity: 0;
-            }
-            30% { 
-                transform: scale(1.3) rotate(180deg);
-            }
-            60% { 
-                transform: scale(1.1) rotate(360deg);
-            }
-            100% { 
-                transform: scale(1) rotate(360deg);
-                opacity: 1;
-            }
-        }
-        
-        .machine-status {
-            font-size: 14px;
+        .prize-name {
+            font-size: 24px;
+            font-weight: 800;
             color: #667eea;
-            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .prize-message {
+            font-size: 14px;
+            color: #999;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
         
         .prizes-grid {
             background: #f5f5f5;
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 25px;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
         }
         
         .prizes-title {
-            font-size: 13px;
+            font-size: 14px;
             color: #999;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             font-weight: 600;
+            text-align: center;
         }
         
         .prizes-list {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
         }
         
         .prize-item {
             background: white;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 15px;
+            border-radius: 12px;
             text-align: center;
             border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        
+        .prize-item:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
         }
         
         .prize-item.empty {
@@ -134,38 +145,52 @@
             background: #f9f9f9;
         }
         
-        .prize-emoji {
-            font-size: 32px;
-            margin-bottom: 5px;
+        .prize-emoji-small {
+            font-size: 40px;
+            margin-bottom: 8px;
         }
         
-        .prize-name {
-            font-size: 12px;
+        .prize-name-small {
+            font-size: 13px;
             font-weight: 600;
             color: #333;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
         
         .prize-count {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 800;
             color: #667eea;
+            padding: 6px 12px;
+            background: #f0f5ff;
+            border-radius: 20px;
+            display: inline-block;
         }
         
         .prize-count.empty {
             color: #ccc;
+            background: #f0f0f0;
             text-decoration: line-through;
+        }
+        
+        .message {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            min-height: 20px;
+            margin-bottom: 20px;
+            font-weight: 600;
         }
         
         .button-group {
             display: flex;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
         
         .btn {
             flex: 1;
-            padding: 16px 20px;
+            padding: 18px 20px;
             border: none;
             border-radius: 15px;
             font-size: 18px;
@@ -179,16 +204,16 @@
             color: white;
         }
         
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
             transform: translateY(-2px);
         }
         
-        .btn-primary:active {
+        .btn-primary:active:not(:disabled) {
             transform: scale(0.95);
         }
         
-        .btn-primary.disabled {
+        .btn-primary:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
@@ -202,12 +227,32 @@
             background: #e8e8e8;
         }
         
-        .message {
-            text-align: center;
-            font-size: 14px;
+        .history {
+            background: #f5f5f5;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        
+        .history-title {
+            font-size: 13px;
             color: #999;
-            min-height: 20px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .history-item {
+            font-size: 13px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+            color: #666;
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
         }
         
         .popup {
@@ -229,114 +274,70 @@
         
         .popup-card {
             background: white;
-            padding: 50px 40px;
-            border-radius: 25px;
+            padding: 60px 40px;
+            border-radius: 30px;
             text-align: center;
             max-width: 350px;
-            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: popUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
-        @keyframes popIn {
+        @keyframes popUp {
             from {
-                transform: scale(0.5);
+                transform: scale(0.5) translateY(100px);
                 opacity: 0;
             }
             to {
-                transform: scale(1);
+                transform: scale(1) translateY(0);
                 opacity: 1;
             }
         }
         
         .popup-emoji {
-            font-size: 80px;
+            font-size: 90px;
             margin-bottom: 20px;
-            animation: bounce 0.6s;
+            animation: bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
         
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-30px); }
+            50% { transform: translateY(-40px); }
         }
         
         .popup-title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 800;
             color: #333;
             margin-bottom: 15px;
         }
         
         .popup-prize {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 900;
             color: #667eea;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
-        .popup-text {
-            font-size: 14px;
+        .popup-player {
+            font-size: 16px;
             color: #999;
+            margin-bottom: 25px;
         }
         
         .close-btn {
-            background: #667eea;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 12px 30px;
+            padding: 14px 40px;
             border: none;
-            border-radius: 20px;
+            border-radius: 25px;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 20px;
+            font-size: 16px;
             transition: all 0.3s;
         }
         
         .close-btn:hover {
-            background: #764ba2;
-        }
-        
-        .player-name {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        
-        .player-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
-            text-align: center;
-        }
-        
-        .player-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        .history {
-            background: #f5f5f5;
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 15px;
-            max-height: 120px;
-            overflow-y: auto;
-        }
-        
-        .history-title {
-            font-size: 12px;
-            color: #999;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .history-item {
-            font-size: 13px;
-            padding: 5px 0;
-            border-bottom: 1px solid #e0e0e0;
-            color: #666;
-        }
-        
-        .history-item:last-child {
-            border-bottom: none;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
     </style>
 </head>
@@ -344,23 +345,35 @@
 
 <div class="container">
     <div class="header">
-        <h1>🎪 新年抽獎機</h1>
-        <p>試試你的手氣！</p>
+        <h1>🎉 新年抽獎</h1>
+        <p>幸運就在眼前</p>
     </div>
     
-    <div class="player-name">
-        <input type="text" class="player-input" id="playerName" placeholder="輸入你的名字" maxlength="10">
+    <div class="input-group">
+        <input 
+            type="text" 
+            class="player-input" 
+            id="playerName" 
+            placeholder="輸入你的名字" 
+            maxlength="10"
+        >
     </div>
     
-    <div class="machine-display">
-        <div class="machine-window">
-            <div class="prize-display" id="prizeDisplay">🎁</div>
-        </div>
-        <div class="machine-status" id="machineStatus">準備就緒</div>
+    <div class="prize-display-box">
+        <div class="prize-emoji" id="prizeEmoji">🎁</div>
+        <div class="prize-name" id="prizeName">準備好了</div>
+        <div class="prize-message" id="prizeMessage">點擊下方「開始抽獎」</div>
+    </div>
+    
+    <div class="message" id="message">輸入名字後開始抽獎</div>
+    
+    <div class="button-group">
+        <button class="btn btn-primary" id="playBtn" onclick="playGame()" disabled>開始抽獎</button>
+        <button class="btn btn-secondary" onclick="resetGame()">重置</button>
     </div>
     
     <div class="prizes-grid">
-        <div class="prizes-title">獎品庫存</div>
+        <div class="prizes-title">剩餘獎品</div>
         <div class="prizes-list" id="prizesList">
             <!-- 動態生成 -->
         </div>
@@ -370,50 +383,31 @@
         <div class="history-title">最近獲獎</div>
         <div id="historyList">還沒有人抽獎呢</div>
     </div>
-    
-    <div class="message" id="message">輸入名字後點擊「開始抽獎」</div>
-    
-    <div class="button-group">
-        <button class="btn btn-primary" id="playBtn" onclick="playGame()" disabled>開始夾娃娃</button>
-        <button class="btn btn-secondary" onclick="resetGame()">重置遊戲</button>
-    </div>
 </div>
 
 <div class="popup" id="popup">
     <div class="popup-card">
         <div class="popup-emoji" id="popupEmoji">🎉</div>
         <div class="popup-title">恭喜！</div>
-        <div class="popup-text">你抽到了</div>
-        <div class="popup-prize" id="popupPrize">大獎</div>
-        <button class="close-btn" onclick="closePopup()">繼續遊玩</button>
+        <div class="popup-player" id="popupPlayer">你</div>
+        <div class="popup-prize" id="popupPrize">獲得獎品</div>
+        <button class="close-btn" onclick="closePopup()">繼續抽獎</button>
     </div>
 </div>
 
 <script>
-    // 獎品池設定
     const initialPrizes = [
-        { name: '1000元', emoji: '💵', count: 2 },
-        { name: '500元', emoji: '💴', count: 1 },
-        { name: '玩偶', emoji: '🧸', count: 3 },
+        { name: '1000元禮券', emoji: '💵', count: 2 },
+        { name: '500元禮券', emoji: '💴', count: 1 },
+        { name: '玩偶', emoji: '🧸', count: 2 },
         { name: '咖啡禮券', emoji: '☕', count: 2 }
     ];
     
     let gameState = {
-        prizes: [],
+        prizes: JSON.parse(JSON.stringify(initialPrizes)),
         history: [],
         isPlaying: false
     };
-    
-    function initGame() {
-        gameState.prizes = JSON.parse(JSON.stringify(initialPrizes));
-        gameState.history = [];
-        renderPrizes();
-        renderHistory();
-        document.getElementById('playerName').value = '';
-        document.getElementById('playerName').focus();
-        document.getElementById('message').textContent = '輸入名字後點擊「開始抽獎」';
-        updatePlayButton();
-    }
     
     function renderPrizes() {
         const list = document.getElementById('prizesList');
@@ -423,8 +417,8 @@
             const item = document.createElement('div');
             item.className = 'prize-item' + (prize.count === 0 ? ' empty' : '');
             item.innerHTML = `
-                <div class="prize-emoji">${prize.emoji}</div>
-                <div class="prize-name">${prize.name}</div>
+                <div class="prize-emoji-small">${prize.emoji}</div>
+                <div class="prize-name-small">${prize.name}</div>
                 <div class="prize-count ${prize.count === 0 ? 'empty' : ''}">
                     ${prize.count > 0 ? prize.count + '份' : '已滿'}
                 </div>
@@ -436,10 +430,12 @@
     function renderHistory() {
         const list = document.getElementById('historyList');
         if (gameState.history.length === 0) {
-            list.innerHTML = '<div style="color: #ccc; text-align: center;">還沒有人抽獎呢</div>';
+            list.innerHTML = '<div style="color: #ccc; text-align: center; padding: 20px 0;">還沒有人抽獎呢</div>';
         } else {
             list.innerHTML = gameState.history.map((h, i) => `
-                <div class="history-item">${gameState.history.length - i}. ${h.name} 抽到 ${h.emoji} ${h.prize}</div>
+                <div class="history-item">
+                    ${gameState.history.length - i}. ${h.name} 抽到 ${h.emoji} ${h.prize}
+                </div>
             `).join('');
         }
     }
@@ -451,13 +447,13 @@
         
         if (name && hasAvailablePrizes && !gameState.isPlaying) {
             btn.disabled = false;
+            document.getElementById('message').textContent = '點擊「開始抽獎」';
         } else if (!hasAvailablePrizes) {
             btn.disabled = true;
-            btn.classList.add('disabled');
             document.getElementById('message').textContent = '獎品已全部領取！';
         } else {
             btn.disabled = true;
-            btn.classList.remove('disabled');
+            document.getElementById('message').textContent = '輸入名字後開始抽獎';
         }
     }
     
@@ -466,49 +462,38 @@
     function playGame() {
         const playerName = document.getElementById('playerName').value.trim();
         
-        if (!playerName) {
-            document.getElementById('message').textContent = '請輸入你的名字';
+        if (!playerName || gameState.isPlaying) return;
+        
+        const availablePrizes = gameState.prizes.filter(p => p.count > 0);
+        if (availablePrizes.length === 0) {
+            document.getElementById('message').textContent = '獎品已全部領取！';
             return;
         }
         
-        if (gameState.isPlaying) return;
-        
         gameState.isPlaying = true;
         document.getElementById('playBtn').disabled = true;
-        document.getElementById('message').textContent = '夾娃娃中...';
-        document.getElementById('machineStatus').textContent = '夾娃娃中...';
+        document.getElementById('message').textContent = '抽獎中...';
         
-        // 重置動畫狀態
-        const prizeDisplay = document.getElementById('prizeDisplay');
-        prizeDisplay.classList.remove('spinning');
-        
-        // 先改變表情進行動畫
+        // 抽獎動畫 - 快速切換表情
         const emojis = ['🎪', '🎭', '🎨', '🎬', '🎮', '🎯', '🎲', '🎰'];
         let emojiIndex = 0;
         const emojiInterval = setInterval(() => {
-            prizeDisplay.textContent = emojis[emojiIndex % emojis.length];
+            document.getElementById('prizeEmoji').textContent = emojis[emojiIndex % emojis.length];
+            document.getElementById('prizeName').textContent = '抽獎中...';
             emojiIndex++;
-        }, 150);
+        }, 100);
         
-        // 動畫持續 2 秒
+        // 2秒後顯示結果
         setTimeout(() => {
             clearInterval(emojiInterval);
             
-            const availablePrizes = gameState.prizes.filter(p => p.count > 0);
-            
-            if (availablePrizes.length === 0) {
-                document.getElementById('message').textContent = '獎品已全部領取！';
-                gameState.isPlaying = false;
-                updatePlayButton();
-                return;
-            }
-            
-            // 隨機選擇一個獎品
-            const randomPrize = availablePrizes[Math.floor(Math.random() * availablePrizes.length)];
+            // 隨機選擇獎品
+            const randomIndex = Math.floor(Math.random() * availablePrizes.length);
+            const selectedPrize = availablePrizes[randomIndex];
             
             // 扣除庫存
             for (let p of gameState.prizes) {
-                if (p.name === randomPrize.name) {
+                if (p.name === selectedPrize.name) {
                     p.count--;
                     break;
                 }
@@ -517,19 +502,18 @@
             // 記錄到歷史
             gameState.history.unshift({
                 name: playerName,
-                prize: randomPrize.name,
-                emoji: randomPrize.emoji
+                prize: selectedPrize.name,
+                emoji: selectedPrize.emoji
             });
             
-            // 更新顯示並觸發動畫
-            prizeDisplay.textContent = randomPrize.emoji;
-            prizeDisplay.classList.add('spinning');
+            // 更新顯示框
+            document.getElementById('prizeEmoji').textContent = selectedPrize.emoji;
+            document.getElementById('prizeName').textContent = selectedPrize.name;
+            document.getElementById('prizeMessage').textContent = `${playerName} 獲得`;
+            document.getElementById('message').textContent = `恭喜 ${playerName}！`;
             
-            document.getElementById('machineStatus').textContent = '成功！';
-            document.getElementById('message').textContent = `${playerName} 抽到 ${randomPrize.name}！`;
-            
-            // 顯示彈出視窗
-            showWinPopup(playerName, randomPrize);
+            // 顯示彈窗
+            showWinPopup(playerName, selectedPrize);
             
             // 更新列表
             renderPrizes();
@@ -542,7 +526,8 @@
     
     function showWinPopup(playerName, prize) {
         document.getElementById('popupEmoji').textContent = prize.emoji;
-        document.getElementById('popupPrize').textContent = `${playerName}\n抽到 ${prize.name}`;
+        document.getElementById('popupPlayer').textContent = `${playerName} 獲得`;
+        document.getElementById('popupPrize').textContent = prize.name;
         document.getElementById('popup').classList.add('show');
     }
     
@@ -553,12 +538,21 @@
     
     function resetGame() {
         if (confirm('確定要重置遊戲嗎？所有獎品庫存會恢復。')) {
-            initGame();
+            gameState.prizes = JSON.parse(JSON.stringify(initialPrizes));
+            gameState.history = [];
+            document.getElementById('playerName').value = '';
+            document.getElementById('prizeEmoji').textContent = '🎁';
+            document.getElementById('prizeName').textContent = '準備好了';
+            document.getElementById('prizeMessage').textContent = '點擊下方「開始抽獎」';
+            renderPrizes();
+            renderHistory();
+            updatePlayButton();
         }
     }
     
     // 初始化
-    initGame();
+    renderPrizes();
+    renderHistory();
 </script>
 
 </body>
