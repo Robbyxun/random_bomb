@@ -344,7 +344,7 @@
 
 <div class="container">
     <div class="header">
-        <h1>🎪 新年夾娃娃機</h1>
+        <h1>🎪 新年抽獎機</h1>
         <p>試試你的手氣！</p>
     </div>
     
@@ -371,7 +371,7 @@
         <div id="historyList">還沒有人抽獎呢</div>
     </div>
     
-    <div class="message" id="message">輸入名字後點擊「開始夾娃娃」</div>
+    <div class="message" id="message">輸入名字後點擊「開始抽獎」</div>
     
     <div class="button-group">
         <button class="btn btn-primary" id="playBtn" onclick="playGame()" disabled>開始夾娃娃</button>
@@ -411,7 +411,7 @@
         renderHistory();
         document.getElementById('playerName').value = '';
         document.getElementById('playerName').focus();
-        document.getElementById('message').textContent = '輸入名字後點擊「開始夾娃娃」';
+        document.getElementById('message').textContent = '輸入名字後點擊「開始抽獎」';
         updatePlayButton();
     }
     
